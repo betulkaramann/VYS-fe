@@ -32,6 +32,17 @@ const RequestManagementSystem = () => {
       approvalDate: '',
       status: 'Onaylanıyor',
       statusType: 'pending'
+    },
+    {
+      id: 3,
+      code: 'alaz',
+      requester: 'alaz.yilmaz',
+      priority: 4,
+      level: 2,
+      submissionDate: '1.09.2025 14:02:49',
+      approvalDate: '',
+      status: 'Onaylanıyor',
+      statusType: 'pending'
     }
   ];
 
