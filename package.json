@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@coreui/icons": "^3.0.1",
+    "@coreui/icons-react": "^2.3.0",
+    "axios": "^1.10.0",
+    "swr": "^2.3.6"
+  }
+}
