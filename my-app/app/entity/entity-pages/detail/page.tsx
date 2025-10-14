@@ -4,13 +4,48 @@ import React, { useState, useMemo } from 'react';
 import { Search, Filter, Plus, Edit2, Eye, Calendar, Phone, MapPin, Clock, FileText, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
 
 const RequestManagementSystem = () => {
+  // typed shape for the detail form data to avoid accessing properties on an untyped `{}`
+  type FormData = {
+    entityCode?: string;
+    teamCode?: string;
+    priority?: string;
+    workType?: string;
+    requestType?: string;
+    requestTiming?: string;
+    requesterName?: string;
+    phoneNumber?: string;
+    description?: string;
+    tags?: string;
+    explanation?: string;
+    submitTo?: string;
+    statusCode?: string;
+    submissionDate?: string;
+    submissionTime?: string;
+    reviewDuration?: string;
+    requestNumber?: string;
+    completionDate?: string;
+    completionTime?: string;
+    // allow additional fields without TypeScript errors
+    [key: string]: any;
+  };
+
   const [activeView, setActiveView] = useState('list'); // 'list' or 'detail'
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedRequest, setSelectedRequest] = useState(null);
-  const [formData, setFormData] = useState({});
+  const [selectedRequest, setSelectedRequest] = useState<any>(null);
+  const [formData, setFormData] = useState<FormData>({} as FormData);
 
   // Mock data based on the images
-  const mockRequests = [
+  const mockRequests: {
+    id: number;
+    code: string;
+    requester: string;
+    priority: number;
+    level: number;
+    submissionDate: string;
+    approvalDate: string;
+    status: string;
+    statusType: 'approved' | 'pending' | 'rejected';
+  }[] = [
     {
       id: 1,
       code: 'elif.ozturk',
@@ -46,7 +81,7 @@ const RequestManagementSystem = () => {
     }
   ];
 
-  const detailFormData = {
+  const detailFormData: FormData = {
     entityCode: '3452',
     teamCode: 'BST.GNY.K1',
     priority: 'N-NORMAL',
@@ -79,16 +114,21 @@ Ben Yazılım Daire Başkanlığı personeli Elif Öztürk. GM-118 numaralı oda
     );
   }, [searchTerm, mockRequests]);
 
-  const getStatusBadge = (statusType, status) => {
+  const getStatusBadge = (
+    statusType: 'approved' | 'pending' | 'rejected',
+    status: any
+  ) => {
     const statusConfig = {
       approved: { icon: CheckCircle, color: 'text-green-700 bg-green-50 border-green-200', iconColor: 'text-green-600' },
       pending: { icon: Clock, color: 'text-yellow-700 bg-yellow-50 border-yellow-200', iconColor: 'text-yellow-600' },
       rejected: { icon: XCircle, color: 'text-red-700 bg-red-50 border-red-200', iconColor: 'text-red-600' }
     };
-    
-    const config = statusConfig[statusType] || statusConfig.pending;
+
+    const config =
+      statusConfig[statusType as keyof typeof statusConfig] ||
+      statusConfig.pending;
     const Icon = config.icon;
-    
+
     return (
       <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium border ${config.color}`}>
         <Icon size={14} className={config.iconColor} />
@@ -97,7 +137,7 @@ Ben Yazılım Daire Başkanlığı personeli Elif Öztürk. GM-118 numaralı oda
     );
   };
 
-  const openDetailView = (request) => {
+  const openDetailView = (request: any) => {
     setSelectedRequest(request);
     setFormData(detailFormData);
     setActiveView('detail');
@@ -107,7 +147,7 @@ Ben Yazılım Daire Başkanlığı personeli Elif Öztürk. GM-118 numaralı oda
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
       <div className="container mx-auto p-6 max-w-7xl">
         
-        {/* Header */}
+       
         <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-6">
           <div className="flex items-center justify-between">
             <div>
@@ -127,7 +167,7 @@ Ben Yazılım Daire Başkanlığı personeli Elif Öztürk. GM-118 numaralı oda
         {activeView === 'list' ? (
           // List View
           <div className="bg-white rounded-xl shadow-sm border border-slate-200">
-            {/* Search and Filters */}
+           
             <div className="p-6 border-b border-slate-100">
               <div className="flex flex-col sm:flex-row gap-4">
                 <div className="relative flex-1">
@@ -147,7 +187,7 @@ Ben Yazılım Daire Başkanlığı personeli Elif Öztürk. GM-118 numaralı oda
               </div>
             </div>
 
-            {/* Table */}
+           
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
@@ -222,7 +262,7 @@ Ben Yazılım Daire Başkanlığı personeli Elif Öztürk. GM-118 numaralı oda
               </table>
             </div>
 
-            {/* Footer */}
+           
             <div className="p-6 border-t border-slate-100 bg-slate-50 rounded-b-xl">
               <div className="flex items-center justify-between text-sm text-slate-600">
                 <span>Toplam {filteredRequests.length} talep</span>
@@ -233,9 +273,9 @@ Ben Yazılım Daire Başkanlığı personeli Elif Öztürk. GM-118 numaralı oda
             </div>
           </div>
         ) : (
-          // Detail View
+        
           <div className="bg-white rounded-xl shadow-sm border border-slate-200">
-            {/* Header */}
+       
             <div className="p-6 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-blue-50">
               <div className="flex items-center justify-between">
                 <div>
@@ -251,7 +291,7 @@ Ben Yazılım Daire Başkanlığı personeli Elif Öztürk. GM-118 numaralı oda
               </div>
             </div>
 
-            {/* Form */}
+    
             <div className="p-6">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* Left Column */}

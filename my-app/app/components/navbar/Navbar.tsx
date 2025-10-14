@@ -2,7 +2,6 @@ import Title from "./Title"
 import Language from "./Language"
 import Logo from "./Logo"
 import Menu from "./Menu"
-import User from "./User"
 
 const Navbar = () => {
   return (
