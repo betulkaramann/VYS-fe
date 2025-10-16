@@ -1,12 +1,13 @@
 'use client';
 import { useState } from "react";
 import { useRouter } from 'next/navigation';
-import { Home, Building, ListChecks, Package, Users, Settings, LogOut, Menu as MenuIcon } from 'lucide-react';
+import { Home, Building, ListChecks, Package, Users, Settings, LogOut, Menu as MenuIcon, LayoutDashboard } from 'lucide-react';
 import { ROUTES } from '../../lib/router';
 
 
 const menuItems = [
-  { name: 'Ana Sayfa', path: ROUTES.HOME, icon: Home, description: 'Genel Durum ve Özet' },
+  { name: 'Yönetim Paneli', path: ROUTES.DASHBOARD, icon: LayoutDashboard, description: 'İstatistikler ve Özet' },
+  { name: 'Ana Sayfa', path: ROUTES.HOME, icon: Home, description: 'Ana Sayfa' },
   { name: 'Varlıklar', path: ROUTES.ASSETS, icon: Building, description: 'Demirbaş, Lokasyon ve Araçlar' },
   { name: 'Talepler & İş Emirleri', path: ROUTES.REQUESTS, icon: ListChecks, description: 'Yeni İş, Arıza ve Bakım İşlemleri' },
   { name: 'Envanter', path: ROUTES.INVENTORY, icon: Package, description: 'Malzemeler, Stok ve Depolar' },
