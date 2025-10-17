@@ -162,32 +162,32 @@ export default function InventoryPage() {
                 placeholder="Malzeme adı..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                className="text-black w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Depo</label>
+              <label className="text-black block text-sm font-medium text-gray-700 mb-2">Depo</label>
               <select
                 value={filterWarehouse}
                 onChange={(e) => setFilterWarehouse(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                className="text-black w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
               >
-                <option value="">Tüm Depolar</option>
+                <option className="text-black" value="">Tüm Depolar</option>
                 {warehouses.map(w => (
-                  <option key={w} value={w}>{w}</option>
+                  <option className="text-black" key={w} value={w}>{w}</option>
                 ))}
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Kategori</label>
+              <label className="text-black block text-sm font-medium text-gray-700 mb-2">Kategori</label>
               <select
                 value={filterCategory}
                 onChange={(e) => setFilterCategory(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                className="text-black w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
               >
-                <option value="">Tüm Kategoriler</option>
+                <option className="text-black" value="">Tüm Kategoriler</option>
                 {categories.map(c => (
-                  <option key={c} value={c}>{c}</option>
+                  <option className="text-black" key={c} value={c}>{c}</option>
                 ))}
               </select>
             </div>

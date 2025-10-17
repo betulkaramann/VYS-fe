@@ -170,7 +170,7 @@ export default function DashboardPage() {
               </Link>
               <Link
                 href={ROUTES.ASSETS}
-                className="block p-3 bg-green-50 text-green-700 rounded-lg hover:bg-green-100 transition-colors font-medium text-sm"
+                className="text-black block p-3 bg-green-50 text-green-700 rounded-lg hover:bg-green-100 transition-colors font-medium text-sm"
               >
                 → Varlık Yönetimi
               </Link>
@@ -187,7 +187,7 @@ export default function DashboardPage() {
               <li>• <strong>Version:</strong> 1.0.0</li>
               <li>• <strong>Son Güncelleme:</strong> 2024-10-16</li>
               <li>• <strong>Durum:</strong> Normal Çalışıyor ✓</li>
-              <li>• <strong>Sistem Saati:</strong> {new Date().toLocaleString('tr-TR')}</li>
+              <strong>Sistem Saati:</strong> {new Date().toLocaleString('tr-TR', { timeZone: 'Europe/Istanbul' })}
             </ul>
           </div>
 
