@@ -124,17 +124,17 @@ export default function AssetsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-7xl mx-auto">
+    <div className="text-black min-h-screen bg-gray-50 p-6">
+      <div className="text-black max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-8 flex items-center justify-between">
+        <div className="text-black mb-8 flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">{t('assets.assets_management')}</h1>
-            <p className="text-gray-600 mt-1">Sabit Varlıklar, Araçlar ve Ekipmanlar</p>
+            <h1 className="text-black text-3xl font-bold text-gray-900">{t('assets.assets_management')}</h1>
+            <p className="text-black text-gray-600 mt-1">Sabit Varlıklar, Araçlar ve Ekipmanlar</p>
           </div>
           <button
             onClick={() => handleOpenModal()}
-            className="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
+            className="text-black flex items-center gap-2 bg-red-800 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
           >
             <Plus size={20} />
             Varlık Ekle
@@ -142,36 +142,36 @@ export default function AssetsPage() {
         </div>
 
         {/* Summary Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-600">
+        <div className="text-black grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="text-black bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-600">
             <div>
-              <p className="text-gray-600 text-sm font-medium">Toplam Varlık Sayısı</p>
-              <p className="text-3xl font-bold text-gray-900">{assets.length}</p>
+              <p className="text-black text-gray-600 text-sm font-medium">Toplam Varlık Sayısı</p>
+              <p className="text-black text-3xl font-bold text-gray-900">{assets.length}</p>
             </div>
           </div>
-          <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-green-600">
+          <div className="text-black bg-white rounded-lg shadow-md p-6 border-l-4 border-green-600">
             <div>
-              <p className="text-gray-600 text-sm font-medium">Toplam Güncel Değer</p>
-              <p className="text-3xl font-bold text-gray-900">₺{totalAssetValue.toLocaleString('tr-TR')}</p>
+              <p className="text-black text-gray-600 text-sm font-medium">Toplam Güncel Değer</p>
+              <p className="text-black text-3xl font-bold text-gray-900">₺{totalAssetValue.toLocaleString('tr-TR')}</p>
             </div>
           </div>
-          <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-red-600">
-            <div className="flex items-center justify-between">
+          <div className="text-black bg-white rounded-lg shadow-md p-6 border-l-4 border-red-600">
+            <div className="text-black flex items-center justify-between">
               <div>
-                <p className="text-gray-600 text-sm font-medium">Toplam Amortisman</p>
-                <p className="text-3xl font-bold text-gray-900">₺{totalDepreciation.toLocaleString('tr-TR')}</p>
+                <p className="text-black text-gray-600 text-sm font-medium">Toplam Amortisman</p>
+                <p className="text-black text-3xl font-bold text-gray-900">₺{totalDepreciation.toLocaleString('tr-TR')}</p>
               </div>
-              <TrendingDown size={40} className="text-red-600 opacity-20" />
+              <TrendingDown size={40} className="text-black text-red-600 opacity-20" />
             </div>
           </div>
         </div>
 
         {/* Filters */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+        <div className="text-black text-black bg-white rounded-lg shadow-md p-6 mb-6">
+          <div className="text-black text-black grid grid-cols-1 md:grid-cols-5 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                <Search size={16} className="inline mr-2" />
+              <label className="text-black text-black block text-sm font-medium text-gray-700 mb-2">
+                <Search size={16} className="text-black inline mr-2" />
                 Ara
               </label>
               <input
@@ -179,54 +179,54 @@ export default function AssetsPage() {
                 placeholder="Kod veya ad..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                className="text-black black-text w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-800"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Kategori</label>
+              <label className="text-black block text-sm font-medium text-gray-700 mb-2">Kategori</label>
               <select
                 value={filterCategory}
                 onChange={(e) => setFilterCategory(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                className="text-black text-black w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-800"
               >
-                <option value="">Tüm Kategoriler</option>
+                <option className="text-black text-black" value="">Tüm Kategoriler</option>
                 {categories.map(c => (
-                  <option key={c} value={c}>{c}</option>
+                  <option className="text-black text-black" key={c} value={c}>{c}</option>
                 ))}
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                <MapPin size={16} className="inline mr-2" />
+              <label className="text-black block text-sm font-medium text-gray-700 mb-2">
+                <MapPin size={16} className="text-black inline mr-2" />
                 Konum
               </label>
               <select
                 value={filterLocation}
                 onChange={(e) => setFilterLocation(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                className="text-black  text-black w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-800"
               >
-                <option value="">Tüm Konumlar</option>
+                <option className="text-black text-black" value="">Tüm Konumlar</option>
                 {locations.map(l => (
-                  <option key={l} value={l}>{l}</option>
+                  <option className="text-black text-black" key={l} value={l}>{l}</option>
                 ))}
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Bakım Durumu</label>
+              <label className="text-black block text-sm font-medium text-gray-700 mb-2">Bakım Durumu</label>
               <select
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                className="text-black text-black w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-800"
               >
-                <option value="">Tüm Durumlar</option>
+                <option className="text-black text-black" value="">Tüm Durumlar</option>
                 {maintenanceStatuses.map(s => (
-                  <option key={s} value={s}>{s}</option>
+                  <option className="text-black text-black" key={s} value={s}>{s}</option>
                 ))}
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Sonuç</label>
-              <div className="px-3 py-2 bg-gray-100 rounded-lg font-semibold text-gray-900">
+              <label className="text-black block text-sm font-medium text-gray-700 mb-2">Sonuç</label>
+              <div className="text-black px-3 py-2 bg-gray-100 rounded-lg font-semibold text-gray-900">
                 {filteredAssets.length} / {assets.length}
               </div>
             </div>
@@ -234,50 +234,50 @@ export default function AssetsPage() {
         </div>
 
         {/* Table */}
-        <div className="bg-white rounded-lg shadow-md overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-gray-100 border-b">
+        <div className="text-black bg-white rounded-lg shadow-md overflow-hidden">
+          <div className="text-black overflow-x-auto">
+            <table className="text-black w-full">
+              <thead className="text-black bg-gray-100 border-b">
                 <tr>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Kod</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Adı</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Kategori</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Konum</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Güncel Değer</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Amortisman %</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Sorumlu</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Bakım Durumu</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">İşlemler</th>
+                  <th className="text-black px-6 py-4 text-left text-sm font-semibold text-gray-900">Kod</th>
+                  <th className="text-black px-6 py-4 text-left text-sm font-semibold text-gray-900">Adı</th>
+                  <th className="text-black px-6 py-4 text-left text-sm font-semibold text-gray-900">Kategori</th>
+                  <th className="text-black px-6 py-4 text-left text-sm font-semibold text-gray-900">Konum</th>
+                  <th className="text-black px-6 py-4 text-left text-sm font-semibold text-gray-900">Güncel Değer</th>
+                  <th className="text-black px-6 py-4 text-left text-sm font-semibold text-gray-900">Amortisman %</th>
+                  <th className="text-black px-6 py-4 text-left text-sm font-semibold text-gray-900">Sorumlu</th>
+                  <th className="text-black px-6 py-4 text-left text-sm font-semibold text-gray-900">Bakım Durumu</th>
+                  <th className="text-black px-6 py-4 text-left text-sm font-semibold text-gray-900">İşlemler</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredAssets.length > 0 ? (
                   filteredAssets.map((asset) => (
-                    <tr key={asset.id} className="border-b hover:bg-gray-50">
-                      <td className="px-6 py-4 text-sm font-medium text-gray-900">{asset.code}</td>
-                      <td className="px-6 py-4 text-sm text-gray-900">{asset.name}</td>
-                      <td className="px-6 py-4 text-sm text-gray-700">{asset.category}</td>
-                      <td className="px-6 py-4 text-sm text-gray-700">{asset.location}</td>
-                      <td className="px-6 py-4 text-sm font-semibold text-gray-900">₺{asset.currentValue.toLocaleString('tr-TR')}</td>
-                      <td className="px-6 py-4 text-sm text-gray-700">{asset.depreciation}%</td>
-                      <td className="px-6 py-4 text-sm text-gray-700">{asset.responsible}</td>
-                      <td className="px-6 py-4">
+                    <tr key={asset.id} className="text-black border-b hover:bg-gray-50">
+                      <td className="text-black px-6 py-4 text-sm font-medium text-gray-900">{asset.code}</td>
+                      <td className="text-black px-6 py-4 text-sm text-gray-900">{asset.name}</td>
+                      <td className="text-black px-6 py-4 text-sm text-gray-700">{asset.category}</td>
+                      <td className="text-black px-6 py-4 text-sm text-gray-700">{asset.location}</td>
+                      <td className="text-black px-6 py-4 text-sm font-semibold text-gray-900">₺{asset.currentValue.toLocaleString('tr-TR')}</td>
+                      <td className="text-black px-6 py-4 text-sm text-gray-700">{asset.depreciation}%</td>
+                      <td className="text-black px-6 py-4 text-sm text-gray-700">{asset.responsible}</td>
+                      <td className="text-black px-6 py-4">
                         <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getMaintenanceColor(asset.maintenanceStatus)}`}>
                           {asset.maintenanceStatus}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-sm">
-                        <div className="flex items-center gap-2">
+                      <td className="text-black px-6 py-4 text-sm">
+                        <div className="text-black flex items-center gap-2">
                           <button
                             onClick={() => handleOpenModal(asset)}
-                            className="text-blue-600 hover:text-blue-800"
+                            className="text-black text-blue-600 hover:text-blue-800"
                             title="Düzenle"
                           >
                             <Edit2 size={18} />
                           </button>
                           <button
                             onClick={() => handleDelete(asset.id)}
-                            className="text-red-600 hover:text-red-800"
+                            className="text-black text-red-600 hover:text-red-800"
                             title="Sil"
                           >
                             <Trash2 size={18} />
@@ -288,7 +288,7 @@ export default function AssetsPage() {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={9} className="px-6 py-8 text-center text-gray-500">
+                    <td colSpan={9} className="text-black px-6 py-8 text-center text-gray-500">
                       Hiçbir varlık bulunamadı
                     </td>
                   </tr>
@@ -301,30 +301,30 @@ export default function AssetsPage() {
 
       {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg max-w-md w-full p-6 max-h-[90vh] overflow-y-auto">
-            <h2 className="text-2xl font-bold mb-4 text-gray-900">
+        <div className="text-black fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="text-black bg-white rounded-lg max-w-md w-full p-6 max-h-[90vh] overflow-y-auto">
+            <h2 className="text-black text-2xl font-bold mb-4 text-gray-900">
               {editingId ? 'Varlık Düzenle' : 'Yeni Varlık Ekle'}
             </h2>
-            <div className="space-y-4">
+            <div className="text-black space-y-4">
               <input
                 type="text"
                 placeholder="Varlık Kodu"
                 value={formData.code}
                 onChange={(e) => setFormData({ ...formData, code: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                className="text-black w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-800"
               />
               <input
                 type="text"
                 placeholder="Adı"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                className="text-black w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-800"
               />
               <select
                 value={formData.category}
                 onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                className="text-black w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-800"
               >
                 <option value="">Kategori Seçin</option>
                 {categories.map(c => (
@@ -334,7 +334,7 @@ export default function AssetsPage() {
               <select
                 value={formData.location}
                 onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                className="text-black w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-800"
               >
                 <option value="">Konum Seçin</option>
                 {locations.map(l => (
@@ -345,22 +345,22 @@ export default function AssetsPage() {
                 type="date"
                 value={formData.acquisitionDate}
                 onChange={(e) => setFormData({ ...formData, acquisitionDate: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                className="text-black w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-800"
               />
-              <div className="grid grid-cols-2 gap-2">
+              <div className="text-black grid grid-cols-2 gap-2">
                 <input
                   type="number"
                   placeholder="Satın Alma Fiyatı"
                   value={formData.acquisitionPrice}
                   onChange={(e) => setFormData({ ...formData, acquisitionPrice: Number(e.target.value) })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                  className="text-black w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-800"
                 />
                 <input
                   type="number"
                   placeholder="Güncel Değer"
                   value={formData.currentValue}
                   onChange={(e) => setFormData({ ...formData, currentValue: Number(e.target.value) })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                  className="text-black w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-800"
                 />
               </div>
               <input
@@ -368,27 +368,27 @@ export default function AssetsPage() {
                 placeholder="Sorumlu Kişi"
                 value={formData.responsible}
                 onChange={(e) => setFormData({ ...formData, responsible: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                className="text-black w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-800"
               />
               <select
                 value={formData.maintenanceStatus}
                 onChange={(e) => setFormData({ ...formData, maintenanceStatus: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                className="text-black w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-800"
               >
                 {maintenanceStatuses.map(s => (
                   <option key={s} value={s}>{s}</option>
                 ))}
               </select>
-              <div className="flex gap-3 pt-4">
+              <div className="text-black flex gap-3 pt-4">
                 <button
                   onClick={handleSave}
-                  className="flex-1 bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition-colors font-medium"
+                  className="text-black flex-1 bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition-colors font-medium"
                 >
                   Kaydet
                 </button>
                 <button
                   onClick={() => setShowModal(false)}
-                  className="flex-1 bg-gray-300 text-gray-900 py-2 rounded-lg hover:bg-gray-400 transition-colors font-medium"
+                  className="text-black flex-1 bg-gray-300 text-gray-900 py-2 rounded-lg hover:bg-gray-400 transition-colors font-medium"
                 >
                   İptal
                 </button>

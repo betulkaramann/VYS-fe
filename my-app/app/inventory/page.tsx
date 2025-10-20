@@ -344,6 +344,7 @@ export default function InventoryPage() {
         {/* Tabs */}
         <Tabs tabs={tabs} variant="underline" size="lg" />
 
+<<<<<<< HEAD
         {/* Modal */}
         {showModal && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -353,6 +354,52 @@ export default function InventoryPage() {
               </h2>
 
               <div className="space-y-4 max-h-96 overflow-y-auto">
+=======
+        {/* Filters */}
+        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                <Search size={16} className="inline mr-2" />
+                Ara
+              </label>
+              <input
+                type="text"
+                placeholder="Malzeme adı..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="text-black w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+              />
+            </div>
+            <div>
+              <label className="text-black block text-sm font-medium text-gray-700 mb-2">Depo</label>
+              <select
+                value={filterWarehouse}
+                onChange={(e) => setFilterWarehouse(e.target.value)}
+                className="text-black w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+              >
+                <option className="text-black" value="">Tüm Depolar</option>
+                {warehouses.map(w => (
+                  <option className="text-black" key={w} value={w}>{w}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="text-black block text-sm font-medium text-gray-700 mb-2">Kategori</label>
+              <select
+                value={filterCategory}
+                onChange={(e) => setFilterCategory(e.target.value)}
+                className="text-black w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+              >
+                <option className="text-black" value="">Tüm Kategoriler</option>
+                {categories.map(c => (
+                  <option className="text-black" key={c} value={c}>{c}</option>
+                ))}
+              </select>
+            </div>
+            <div className="flex items-end">
+              <label className="flex items-center cursor-pointer">
+>>>>>>> 3d64246e1369916529146ec6d2802176b648e42a
                 <input
                   type="text"
                   placeholder="Malzeme Adı"
