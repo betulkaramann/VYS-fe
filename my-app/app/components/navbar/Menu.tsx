@@ -1,7 +1,7 @@
 'use client';
 import { useState } from "react";
 import { useRouter } from 'next/navigation';
-import { Home, Building, ListChecks, Package, Users, Settings, LogOut, Menu as MenuIcon, LayoutDashboard } from 'lucide-react';
+import { Home, Building, ListChecks, Package, Users, Settings, LogOut, Menu as MenuIcon, LayoutDashboard, BarChart3, Bell, Wrench } from 'lucide-react';
 import { ROUTES } from '../../lib/router';
 
 
@@ -12,7 +12,10 @@ const menuItems = [
   { name: 'Talepler & İş Emirleri', path: ROUTES.REQUESTS, icon: ListChecks, description: 'Yeni İş, Arıza ve Bakım İşlemleri' },
   { name: 'Envanter', path: ROUTES.INVENTORY, icon: Package, description: 'Malzemeler, Stok ve Depolar' },
   { name: 'İnsan Kaynakları', path: ROUTES.HR, icon: Users, description: 'Personel ve Vardiya Planlama' },
-  { name: 'Ayarlar', path: ROUTES.PROFILE, icon: Settings, description: 'Sistem Altyapısı ve Parametreler' },
+  { name: 'Analitik & Raporlar', path: ROUTES.ANALYTICS, icon: BarChart3, description: 'İstatistikler ve Performans Raporları' },
+  { name: 'Bildirimler', path: ROUTES.NOTIFICATIONS, icon: Bell, description: 'Tüm Bildirim ve İletiler' },
+  { name: 'Bakım & Yedekleme', path: ROUTES.MAINTENANCE, icon: Wrench, description: 'Sistem Bakımı ve Yedekleme' },
+  { name: 'Ayarlar', path: ROUTES.SETTINGS, icon: Settings, description: 'Hesap ve Uygulama Ayarları' },
 ];
 
 //profile ve requests routerları dolu
