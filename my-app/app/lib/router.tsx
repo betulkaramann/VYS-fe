@@ -11,6 +11,12 @@ export const ROUTES = {
   HR: '/hr',
   PROFILE: '/profile',
 
+  // new pages
+  ANALYTICS: '/analytics',
+  SETTINGS: '/settings',
+  NOTIFICATIONS: '/notifications',
+  MAINTENANCE: '/maintenance',
+
   // specific request/entity routes
   REQUEST_DETAIL: '/requests/:id',
 
