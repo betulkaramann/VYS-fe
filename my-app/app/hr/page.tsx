@@ -3,6 +3,7 @@
 import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Plus, Edit2, Trash2, Search, Filter } from 'lucide-react';
+import { COLORS } from '../utils/colors';
 
 type Employee = {
   id: number;
@@ -120,7 +121,7 @@ export default function HRPage() {
           </div>
           <button
             onClick={() => handleOpenModal()}
-            className="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
+            className={`flex items-center gap-2 ${COLORS.red800} text-white px-4 py-2 rounded-lg hover:${COLORS.red800} transition-colors`}
           >
             <Plus size={20} />
             {t('hr.add_employee')}

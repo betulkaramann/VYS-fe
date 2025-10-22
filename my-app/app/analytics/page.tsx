@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BarChart3, LineChart, PieChart, TrendingUp, Download, Filter, Calendar } from 'lucide-react';
 import Tabs, { TabItem } from '../components/tabs/Tabs';
+import { COLORS } from '../utils/colors';
 
 export default function AnalyticsPage() {
   const { t } = useTranslation();
@@ -21,10 +22,10 @@ export default function AnalyticsPage() {
   ];
 
   const requestTypeData = [
-    { name: 'Arıza Talebi', value: 35, color: 'bg-red-500' },
-    { name: 'Malzeme Talebi', value: 28, color: 'bg-blue-500' },
-    { name: 'Araç Talebi', value: 22, color: 'bg-green-500' },
-    { name: 'Temizlik Talebi', value: 15, color: 'bg-yellow-500' },
+  { name: 'Arıza Talebi', value: 35, color: COLORS.red500 },
+  { name: 'Malzeme Talebi', value: 28, color: COLORS.blue500 },
+  { name: 'Araç Talebi', value: 22, color: COLORS.green500 },
+  { name: 'Temizlik Talebi', value: 15, color: COLORS.yellow500 },
   ];
 
   const departmentStats = [
@@ -59,28 +60,28 @@ export default function AnalyticsPage() {
           value="328"
           subtitle="+12% bu ay"
           icon={<BarChart3 size={24} />}
-          color="text-blue-600"
+          color={COLORS.textBlue600}
         />
         <StatCard
           title="Tamamlanan"
           value="298"
           subtitle="+8% bu ay"
           icon={<TrendingUp size={24} />}
-          color="text-green-600"
+          color={COLORS.textGreen600}
         />
         <StatCard
           title="Beklemede"
           value="24"
           subtitle="-3% son haftada"
           icon={<Calendar size={24} />}
-          color="text-yellow-600"
+          color={COLORS.textYellow600}
         />
         <StatCard
           title="Ort. Tamamlama"
           value="1.8 gün"
           subtitle="↓ 15% iyileşme"
           icon={<LineChart size={24} />}
-          color="text-purple-600"
+          color={COLORS.textPurple600}
         />
       </div>
 
@@ -94,12 +95,12 @@ export default function AnalyticsPage() {
               <div key={idx} className="flex-1 flex flex-col items-center gap-2">
                 <div className="w-full flex gap-1">
                   <div
-                    className="flex-1 bg-blue-500 rounded-t hover:opacity-80 transition"
+                    className={`${COLORS.blue500} flex-1 rounded-t hover:opacity-80 transition`}
                     style={{ height: `${(data.requests / 70) * 200}px` }}
                     title={`${data.month}: ${data.requests}`}
                   />
-                  <div
-                    className="flex-1 bg-green-500 rounded-t hover:opacity-80 transition"
+                    <div
+                      className={`${COLORS.green500} flex-1 rounded-t hover:opacity-80 transition`}
                     style={{ height: `${(data.completed / 70) * 200}px` }}
                     title={`Tamamlanan: ${data.completed}`}
                   />
@@ -110,11 +111,11 @@ export default function AnalyticsPage() {
           </div>
           <div className="flex gap-4 mt-4 text-sm">
             <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-blue-500 rounded" />
+              <div className={`w-3 h-3 ${COLORS.blue500} rounded`} />
               <span>Toplam</span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-green-500 rounded" />
+              <div className={`w-3 h-3 ${COLORS.green500} rounded`} />
               <span>Tamamlanan</span>
             </div>
           </div>
@@ -130,7 +131,7 @@ export default function AnalyticsPage() {
                   <span className="text-sm font-medium text-gray-700">{type.name}</span>
                   <span className="text-sm font-bold text-gray-900">{type.value}%</span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="w-full bg-gray-200 rounded-full h-2">
                   <div
                     className={`${type.color} h-2 rounded-full transition-all`}
                     style={{ width: `${type.value}%` }}
@@ -197,7 +198,7 @@ export default function AnalyticsPage() {
                 <p className="text-sm text-gray-600 mt-2">{report.format} • {report.size}</p>
               </div>
               <button className="p-2 hover:bg-gray-100 rounded-lg transition">
-                <Download size={20} className="text-red-600" />
+                <Download size={20} className={COLORS.textBlue600} />
               </button>
             </div>
           </div>

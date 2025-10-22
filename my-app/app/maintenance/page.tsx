@@ -4,7 +4,9 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Settings, Database, RotateCcw, Download, Upload, Clock, CheckCircle2, AlertCircle } from 'lucide-react';
-import Tabs, { TabItem } from '../components/tabs/Tabs';
+import { TabItem } from '../components/tabs/Tabs';
+import {Tabs, Tab, CardBody, Card} from "@heroui/react";
+import { COLORS } from '../utils/colors';
 
 export default function MaintenancePage() {
   const { t } = useTranslation();
@@ -147,7 +149,7 @@ export default function MaintenancePage() {
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Yedekleme İşlemleri</h3>
         
         <div className="space-y-3">
-          <button className="w-full px-4 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-medium flex items-center justify-center gap-2">
+          <button className={`w-full px-4 py-3 ${COLORS.red800} text-white rounded-lg hover:${COLORS.red800} transition font-medium flex items-center justify-center gap-2`}>
             <Download size={18} />
             Şu Anda Yedekle
           </button>
@@ -215,7 +217,7 @@ export default function MaintenancePage() {
           ))}
         </div>
 
-        <button className="mt-6 w-full px-4 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-medium">
+        <button className = {`mt-6 w-full px-4 py-3 ${COLORS.red800} text-white rounded-lg hover:${COLORS.red800} transition font-medium`}>
           Geri Yükle
         </button>
       </div>
@@ -244,20 +246,47 @@ export default function MaintenancePage() {
     },
   ];
 
+
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-2">
-            <Settings size={32} className="text-red-600" />
             <h1 className="text-4xl font-bold text-gray-900">Bakım & Yedekleme</h1>
           </div>
           <p className="text-gray-600">Sistem bakımı, yedekleme ve geri yükleme işlemlerini yönetin</p>
         </div>
 
-        {/* Tabs */}
-        <Tabs tabs={tabs} variant="underline" size="lg" />
+       <div className="p-8 min-h-[400px]">
+      <div className="flex w-full flex-col">
+        <Tabs
+          aria-label="Dynamic tabs"
+          items={tabs}
+          classNames={{
+            tabList: "p-1 gap-1 rounded-xl shadow-xl", 
+            tab: [
+              "h-10 px-4", 
+              "rounded-lg",
+              "data-[selected=true]:bg-red-800",
+              "data-[selected=true]:text-white", 
+              "data-[selected=true]:shadow-lg", 
+            ],
+        
+            panel: "mt-4",
+          }}
+        >
+          {(item) => (
+            <Tab key={item.id} title={item.label} >
+              <Card>
+                <CardBody >
+                  {item.content}
+                </CardBody>
+              </Card>
+            </Tab>
+          )}
+        </Tabs>
+      </div>
+    </div>
       </div>
     </div>
   );

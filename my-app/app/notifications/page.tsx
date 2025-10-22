@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Bell, MessageCircle, AlertCircle, CheckCircle2, Trash2, Archive, Eye } from 'lucide-react';
 import Tabs, { TabItem } from '../components/tabs/Tabs';
+import { COLORS } from '../utils/colors';
 
 export default function NotificationsPage() {
   const { t } = useTranslation();
@@ -260,7 +261,7 @@ export default function NotificationsPage() {
             <p className="text-gray-600 mt-2">Tüm bildirim ve mesajlarınız merkezi</p>
           </div>
           {unreadCount > 0 && (
-            <div className="px-4 py-2 bg-red-600 text-white rounded-lg font-medium">
+            <div className={`px-4 py-2 ${COLORS.red800} text-white rounded-lg font-medium`}>
               {unreadCount} Okunmayan
             </div>
           )}

@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import { ROUTES } from '../../lib/router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { COLORS } from '@/app/utils/colors';
 
 export default function MalzemePage() {
   const router = useRouter();
@@ -186,8 +187,7 @@ export default function MalzemePage() {
               <button
                 type="button"
                 onClick={addMaterial}
-                className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200 font-medium"
-              >
+                className={`text-xs bg-blue-100 ${COLORS.red800} px-2 py-1 rounded hover:${COLORS.red800} font-medium`}>
                 + Malzeme Ekle
               </button>
             </div>
