@@ -71,9 +71,15 @@ function parseYMD(s: string): number {
 export default function UserTable() {
   // global + per-column filters
   const [globalFilter, setGlobalFilter] = useState("");
-  const [nameFilter, setNameFilter] = useState("");
-  const [regFilter, setRegFilter] = useState("");
-  const [roleFilter, setRoleFilter] = useState("");
+  const [jobNoFilter, setJobNoFilter] = useState("");
+  const [entityCodeFilter, setEntityCodeFilter] = useState("");
+  const [requesterFilter, setRequesterFilter] = useState("");
+  const [detailFilter, setDetailFilter] = useState("");
+  const [dateFilter, setDateFilter] = useState("");
+  const [requestTypeFilter, setRequestTypeFilter] = useState("");
+  const [jobTypeFilter, setJobTypeFilter] = useState("");
+  const [workOrderFilter, setWorkOrderFilter] = useState("");
+  const [workerFilter, setWorkerFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
 
   // sorting
@@ -102,14 +108,21 @@ export default function UserTable() {
           u.requester.toLowerCase().includes(g) ||
           u.workOrderType.toLowerCase().includes(g) ||
           u.status.toLowerCase().includes(g) ||
-          u.jobType.includes(g)
+          u.jobType.includes(g) ||
+          u.requestDetail.toLowerCase().includes(g)
         )
       )
         return false;
 
-      if (nameFilter && !u.requester.toLowerCase().includes(nameFilter.toLowerCase())) return false;
-      if (regFilter && !u.jobType.includes(regFilter)) return false;
-      if (roleFilter && !u.workOrderType.toLowerCase().includes(roleFilter.toLowerCase())) return false;
+      if (jobNoFilter && !u.jobNo.toString().includes(jobNoFilter)) return false;
+      if (entityCodeFilter && !u.entityCode.toString().includes(entityCodeFilter)) return false;
+      if (requesterFilter && !u.requester.toLowerCase().includes(requesterFilter.toLowerCase())) return false;
+      if (detailFilter && !u.requestDetail.toLowerCase().includes(detailFilter.toLowerCase())) return false;
+      if (dateFilter && !u.createDate.includes(dateFilter)) return false;
+      if (requestTypeFilter && !u.requestType.toLowerCase().includes(requestTypeFilter.toLowerCase())) return false;
+      if (jobTypeFilter && !u.jobType.toLowerCase().includes(jobTypeFilter.toLowerCase())) return false;
+      if (workOrderFilter && !u.workOrderType.toLowerCase().includes(workOrderFilter.toLowerCase())) return false;
+      if (workerFilter && !u.worker.toLowerCase().includes(workerFilter.toLowerCase())) return false;
       if (statusFilter && u.status !== (statusFilter as Status)) return false;
 
       return true;
@@ -135,7 +148,7 @@ export default function UserTable() {
       if (av > bv) return 1 * dir;
       return 0;
     });
-  }, [globalFilter, nameFilter, regFilter, roleFilter, statusFilter, sortKey, sortDir]);
+  }, [globalFilter, jobNoFilter, entityCodeFilter, requesterFilter, detailFilter, dateFilter, requestTypeFilter, jobTypeFilter, workOrderFilter, workerFilter, statusFilter, sortKey, sortDir]);
 
   const totalPages = Math.max(1, Math.ceil(filteredAndSorted.length / itemsPerPage));
   const currentPage = Math.min(page, totalPages);
@@ -188,54 +201,54 @@ export default function UserTable() {
           <tr className="bg-gray-50">
             <th className="p-2">
               <input
-                value={nameFilter}
+                value={jobNoFilter}
                 onChange={(e) => {
-                  setNameFilter(e.target.value);
+                  setJobNoFilter(e.target.value);
                   setPage(1);
                 }}
-                placeholder="filter…"
+                placeholder="İş No..."
                 className="border p-1 rounded w-full text-sm"
               />
             </th>
             
             <th className="p-2">
               <input
-                value={roleFilter}
+                value={entityCodeFilter}
                 onChange={(e) => {
-                  setRoleFilter(e.target.value);
+                  setEntityCodeFilter(e.target.value);
                   setPage(1);
                 }}
-                placeholder="filter…"
+                placeholder="Kod..."
                 className="border p-1 rounded w-full text-sm"
               />
             </th>
             <th className="p-2">
               <input
-                value={roleFilter}
+                value={requesterFilter}
                 onChange={(e) => {
-                  setRoleFilter(e.target.value);
+                  setRequesterFilter(e.target.value);
                   setPage(1);
                 }}
-                placeholder="filter…"
+                placeholder="İsim..."
                 className="border p-1 rounded w-full text-sm"
               />
             </th>
             <th className="p-2">
               <input
-                value={roleFilter}
+                value={detailFilter}
                 onChange={(e) => {
-                  setRoleFilter(e.target.value);
+                  setDetailFilter(e.target.value);
                   setPage(1);
                 }}
-                placeholder="filter…"
+                placeholder="Açıklama..."
                 className="border p-1 rounded w-full text-sm"
               />
             </th>
             <th className="p-2">
               <input
-                value={regFilter}
+                value={dateFilter}
                 onChange={(e) => {
-                  setRegFilter(e.target.value);
+                  setDateFilter(e.target.value);
                   setPage(1);
                 }}
                 placeholder="YYYY/MM/DD"
@@ -244,45 +257,45 @@ export default function UserTable() {
             </th>
             <th className="p-2">
               <input
-                value={roleFilter}
+                value={requestTypeFilter}
                 onChange={(e) => {
-                  setRoleFilter(e.target.value);
+                  setRequestTypeFilter(e.target.value);
                   setPage(1);
                 }}
-                placeholder="filter…"
+                placeholder="Talep..."
                 className="border p-1 rounded w-full text-sm"
               />
             </th>
             <th className="p-2">
               <input
-                value={roleFilter}
+                value={jobTypeFilter}
                 onChange={(e) => {
-                  setRoleFilter(e.target.value);
+                  setJobTypeFilter(e.target.value);
                   setPage(1);
                 }}
-                placeholder="filter…"
+                placeholder="İş Tipi..."
                 className="border p-1 rounded w-full text-sm"
               />
             </th>
             <th className="p-2">
               <input
-                value={roleFilter}
+                value={workOrderFilter}
                 onChange={(e) => {
-                  setRoleFilter(e.target.value);
+                  setWorkOrderFilter(e.target.value);
                   setPage(1);
                 }}
-                placeholder="filter…"
+                placeholder="İş Emri..."
                 className="border p-1 rounded w-full text-sm"
               />
             </th>
             <th className="p-2">
               <input
-                value={roleFilter}
+                value={workerFilter}
                 onChange={(e) => {
-                  setRoleFilter(e.target.value);
+                  setWorkerFilter(e.target.value);
                   setPage(1);
                 }}
-                placeholder="filter…"
+                placeholder="Sorumlu..."
                 className="border p-1 rounded w-full text-sm"
               />
             </th>
