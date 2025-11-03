@@ -1,8 +1,9 @@
-'use client';
+ 'use client';
 
 import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Plus, Edit2, Trash2, Search, TrendingDown, MapPin } from 'lucide-react';
+import { COLORS } from '../../utils/colors';
 
 type Asset = {
   id: number;
@@ -134,7 +135,7 @@ export default function AssetsPage() {
           </div>
           <button
             onClick={() => handleOpenModal()}
-            className="text-black flex items-center gap-2 bg-red-800 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
+            className={`text-black flex items-center gap-2 ${COLORS.red800} text-white px-4 py-2 rounded-lg hover:${COLORS.red800} transition-colors`}
           >
             <Plus size={20} />
             Varlık Ekle

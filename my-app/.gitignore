@@ -44,3 +44,9 @@ next-env.d.ts
 temp/
 tmp/
 *.log
+
+# VS Code ayarları
+.vscode/
+
+# JetBrains IDE'leri (WebStorm, IntelliJ)
+.idea/

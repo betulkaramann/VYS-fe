@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from 'next/navigation';
 import { Home, Building, ListChecks, Package, Users, Settings, LogOut, Menu as MenuIcon, LayoutDashboard, BarChart3, Bell, Wrench } from 'lucide-react';
 import { ROUTES } from '../../lib/router';
+import { COLORS } from "@/app/utils/colors";
 
 
 const menuItems = [
@@ -51,7 +52,8 @@ const Menu = () => {
           <div className="fixed inset-0 z-50 flex pointer-events-none">
             <div className="ml-auto w-full max-w-xs bg-white h-full border-l flex flex-col pointer-events-auto transform transition-transform duration-300 ease-out translate-x-0" style={{ animation: 'slide-in 0.3s forwards' }}>
               
-              <div className="flex items-center justify-between px-6 py-4 border-b bg-red-800 text-white">
+              <div className ={`flex items-center justify-between px-6 py-4 border-b ${COLORS.red800} text-white`}>
+                
                 <span className="font-bold tracking-wider">ANA MENÜ</span>
                 <button 
                   onClick={() => setOpen(false)} 
@@ -83,7 +85,8 @@ const Menu = () => {
               </div>
 
               <button
-                className="w-full flex items-center gap-3 text-left px-6 py-4 text-white bg-red-700 hover:bg-red-700 font-bold transition-all mt-auto shadow-inner"
+                className={`w-full flex items-center gap-3 text-left px-6 py-4 text-white cursor-pointer
+                ${COLORS.red800} font-bold transition-all mt-auto shadow-inner`}
                 onClick={() => { setOpen(false);}}
               >
                 <LogOut className="w-5 h-5" />
