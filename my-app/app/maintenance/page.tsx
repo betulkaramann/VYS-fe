@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Settings, Database, RotateCcw, Download, Upload, Clock, CheckCircle2, AlertCircle } from 'lucide-react';
 import { TabItem } from '../components/tabs/Tabs';
-import {Tabs, Tab, CardBody, Card} from "@nextui-org/react";
+import {Tabs, Tab, CardBody, Card} from "@heroui/react";
 import { COLORS } from '../utils/colors';
 
 export default function MaintenancePage() {
