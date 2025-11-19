@@ -19,7 +19,7 @@ export const COLORS = {
   red100: 'bg-red-100',
   red700Text: 'text-red-700',
   red500: 'bg-red-500',
-  red800: 'bg-yellow-300',
+  red800: 'bg-red-800',
   textRed600: 'text-red-600',
 };
 
