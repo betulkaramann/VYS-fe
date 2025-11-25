@@ -11,19 +11,21 @@ import is from './assets/home/is.jpg';
 import malzeme from './assets/home/malzeme.png';
 import temizlik from './assets/home/temizlik.png';
 
-import { ArrowRight, TrendingUp, Users, Clock, Bot, Send, X, Sparkles } from 'lucide-react';
+import { ArrowRight, TrendingUp, Users, Clock, Bot, Send, X, Sparkles, Lightbulb, Zap } from 'lucide-react';
 import { FadeIn, SlideInLeft, ScaleIn } from './components/common/PageTransition';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChatModel } from './chatbot/models/AIModel';
 
-// Initialize AI with 40% confidence threshold
-const aiModel = new ChatModel(0.4);
+// Initialize AI
+const aiModel = new ChatModel();
 
 type Message = {
     id: number;
     text: string;
     sender: 'user' | 'bot';
+    suggestions?: string[];
+    entities?: Array<{ type: string; value: string }>;
 };
 
 export default function Home() {
@@ -34,7 +36,12 @@ export default function Home() {
     const [chatInput, setChatInput] = useState('');
     const [isTyping, setIsTyping] = useState(false);
     const [messages, setMessages] = useState<Message[]>([
-        { id: 1, text: "Merhaba! Size nasıl yardımcı olabilirim? (Örn: 'Klima bozuldu' veya 'Kalem lazım')", sender: 'bot' }
+        { 
+            id: 1, 
+            text: "👋 Merhaba! Varlık Yönetim Sistemi asistanıyım.\n\nÇalışan komutlar:\n• \"Klima bozuldu\" - Arıza bildirme\n• \"Kalem lazım\" - Malzeme talebi\n• \"Kızılay'a araç istiyorum\" - Şehir içi araç talebi\n• \"İstanbul araç\" - Şehir dışı araç talebi\n• \"Yeni iş talebi\" - Yeni iş talebi\n• \"Temizlik istiyorum\" - Temizlik talebi\n• \"Taleplerimi göster\" - Talep sorgulama\n• \"Envanter durumu\" - Envanter sorgulama\n• \"İstatistikler\" - Dashboard", 
+            sender: 'bot',
+            suggestions: ["Klima bozuldu", "Kalem lazım", "Kızılay'a araç istiyorum", "Yeni iş talebi", "Temizlik istiyorum"]
+        }
     ]);
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -72,30 +79,78 @@ export default function Home() {
         setChatInput('');
         setIsTyping(true);
 
-        // Simulate network delay
+        // Basit ve hızlı işleme
         setTimeout(() => {
-            const prediction = aiModel.predict(userText);
+            try {
+                const prediction = aiModel.predict(userText);
+                console.log('🔍 Prediction:', prediction);
 
-            let responseText = "";
-            let targetRoute = null;
+                let responseText = "";
+                let targetRoute: string | null = null;
 
-            if (prediction.intent) {
-                responseText = aiModel.getRandomResponse(prediction.intent);
-                targetRoute = prediction.intent.route;
-            } else {
-                responseText = "Bunu tam anlayamadım. Lütfen 'Bilgisayar arızası', 'Temizlik' veya 'Malzeme isteği' gibi anahtar kelimeler kullanın.";
+                if (prediction.intent) {
+                    // Intent bulundu - cevap ve route al
+                    responseText = aiModel.getResponse(prediction.intent, prediction.data, userText);
+                    targetRoute = prediction.intent.route;
+                    
+                    console.log('✅ Intent:', prediction.intent.id, 'Route:', targetRoute);
+                } else {
+                    // Intent bulunamadı
+                    responseText = "Üzgünüm, bunu anlayamadım. Lütfen şu örneklerden birini deneyin:\n• \"Klima bozuldu\" - Arıza bildirme\n• \"Kalem lazım\" - Malzeme talebi\n• \"Kızılay'a araç istiyorum\" - Şehir içi araç\n• \"İstanbul araç\" - Şehir dışı araç\n• \"Yeni iş talebi\" - Yeni iş talebi\n• \"Temizlik istiyorum\" - Temizlik talebi\n• \"Taleplerimi göster\" - Talep sorgulama\n• \"Envanter durumu\" - Envanter sorgulama\n• \"İstatistikler\" - Dashboard";
+                    console.warn('❌ No intent found for:', userText);
+                }
+
+                // Mesajı ekle
+                setMessages(prev => [...prev, { 
+                    id: Date.now() + 1, 
+                    text: responseText, 
+                    sender: 'bot'
+                }]);
+                setIsTyping(false);
+
+                // Yönlendirme - HEMEN YAP (setTimeout kaldırıldı)
+                if (targetRoute && prediction.intent) {
+                    // Route'u düzelt
+                    let fullRoute = targetRoute;
+                    if (!fullRoute.startsWith('/')) {
+                        fullRoute = `/${fullRoute}`;
+                    }
+                    
+                    // URL oluştur (navigate intent'ler için desc parametresi)
+                    let url = fullRoute;
+                    if (['ariza', 'malzeme', 'sehir-ici-arac', 'sehir-disi-arac', 'yeni-is', 'temizlik'].includes(prediction.intent.id)) {
+                        url = `${fullRoute}?desc=${encodeURIComponent(userText)}`;
+                    }
+                    
+                    console.log('🚀 Navigating to:', url);
+                    
+                    // İstatistikler için 10 saniye bekle, diğerleri için 500ms
+                    const delay = prediction.intent.id === 'istatistik' ? 10000 : 500;
+                    
+                    setTimeout(() => {
+                        router.push(url);
+                    }, delay);
+                }
+
+            } catch (error) {
+                console.error('Chatbot error:', error);
+                setMessages(prev => [...prev, { 
+                    id: Date.now() + 1, 
+                    text: "Üzgünüm, bir hata oluştu. Lütfen tekrar deneyin.", 
+                    sender: 'bot'
+                }]);
+                setIsTyping(false);
             }
+        }, 500);
+    };
 
-            setMessages(prev => [...prev, { id: Date.now() + 1, text: responseText, sender: 'bot' }]);
-            setIsTyping(false);
-
-            if (targetRoute) {
-                setTimeout(() => {
-                    router.push(`${targetRoute}?desc=${encodeURIComponent(userText)}`);
-                }, 1500);
-            }
-
-        }, 1000);
+    const handleSuggestionClick = (suggestion: string) => {
+        setChatInput(suggestion);
+        // Hemen gönder
+        setTimeout(() => {
+            const fakeEvent = { preventDefault: () => {} } as React.FormEvent;
+            handleSendMessage(fakeEvent);
+        }, 100);
     };
 
     return (
@@ -224,18 +279,61 @@ export default function Home() {
                         >
                             <div className="bg-gradient-to-r from-red-600 to-red-700 p-4 flex items-center justify-between text-white shadow-md">
                                 <div className="flex items-center gap-2">
-                                    <div className="bg-white/20 p-1.5 rounded-full">
+                                    <div className="bg-white/20 p-1.5 rounded-full animate-pulse">
                                         <Sparkles size={18} />
                                     </div>
                                     <div>
                                         <h3 className="font-bold text-sm">Akıllı Asistan</h3>
-                                        <p className="text-xs text-red-100">Size nasıl yardım edebilirim?</p>
+                                        <p className="text-xs text-red-100">VYS - Varlık Yönetim Sistemi</p>
                                     </div>
                                 </div>
-                                <button onClick={() => setIsChatOpen(false)} className="hover:bg-white/20 p-1 rounded transition">
-                                    <X size={18} />
-                                </button>
+                                <div className="flex items-center gap-2">
+                                    <button 
+                                        onClick={() => {
+                                            setMessages([{ 
+                                                id: 1, 
+                                                text: "👋 Merhaba! Varlık Yönetim Sistemi asistanıyım.\n\nÇalışan komutlar:\n• \"Klima bozuldu\" - Arıza bildirme\n• \"Kalem lazım\" - Malzeme talebi\n• \"Taleplerimi göster\" - Talep sorgulama\n• \"Envanter durumu\" - Envanter sorgulama\n• \"İstatistikler\" - Dashboard", 
+                                                sender: 'bot',
+                                                suggestions: ["Klima bozuldu", "Kalem lazım", "Taleplerimi göster", "Envanter durumu", "İstatistikler"]
+                                            }]);
+                                        }} 
+                                        className="hover:bg-white/20 p-1.5 rounded transition" 
+                                        title="Konuşmayı Sıfırla"
+                                    >
+                                        <Sparkles size={16} />
+                                    </button>
+                                    <button onClick={() => setIsChatOpen(false)} className="hover:bg-white/20 p-1 rounded transition">
+                                        <X size={18} />
+                                    </button>
+                                </div>
                             </div>
+                            
+                            {/* Quick Actions */}
+                            {messages.length <= 1 && (
+                                <div className="px-4 pt-3 pb-2 bg-red-50 border-b border-red-100">
+                                    <p className="text-xs text-gray-600 mb-2 font-medium">Hızlı İşlemler:</p>
+                                    <div className="flex flex-wrap gap-2">
+                                        <button
+                                            onClick={() => handleSuggestionClick("Taleplerimi göster")}
+                                            className="px-3 py-1.5 bg-white hover:bg-red-100 text-red-700 rounded-lg text-xs font-medium transition-colors border border-red-200"
+                                        >
+                                            📋 Taleplerim
+                                        </button>
+                                        <button
+                                            onClick={() => handleSuggestionClick("Envanter durumu")}
+                                            className="px-3 py-1.5 bg-white hover:bg-red-100 text-red-700 rounded-lg text-xs font-medium transition-colors border border-red-200"
+                                        >
+                                            📦 Envanter
+                                        </button>
+                                        <button
+                                            onClick={() => handleSuggestionClick("İstatistikler")}
+                                            className="px-3 py-1.5 bg-white hover:bg-red-100 text-red-700 rounded-lg text-xs font-medium transition-colors border border-red-200"
+                                        >
+                                            📊 İstatistikler
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
 
                             <div className="flex-1 overflow-y-auto p-4 bg-gray-50 space-y-3">
                                 {messages.map((msg) => (
@@ -243,7 +341,7 @@ export default function Home() {
                                         key={msg.id}
                                         initial={{ opacity: 0, x: msg.sender === 'bot' ? -10 : 10 }}
                                         animate={{ opacity: 1, x: 0 }}
-                                        className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                                        className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}
                                     >
                                         <div
                                             className={`max-w-[80%] p-3 rounded-2xl text-sm shadow-sm ${
@@ -252,8 +350,24 @@ export default function Home() {
                                                     : 'bg-white text-gray-800 rounded-bl-none border border-gray-100'
                                             }`}
                                         >
-                                            {msg.text}
+                                            <div className="whitespace-pre-line">{msg.text}</div>
                                         </div>
+                                        
+                                        {/* Suggestions */}
+                                        {msg.suggestions && msg.suggestions.length > 0 && (
+                                            <div className="mt-2 flex flex-wrap gap-2 max-w-[80%]">
+                                                {msg.suggestions.map((suggestion, idx) => (
+                                                    <button
+                                                        key={idx}
+                                                        onClick={() => handleSuggestionClick(suggestion)}
+                                                        className="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-700 rounded-full text-xs font-medium transition-colors flex items-center gap-1 border border-red-200 cursor-pointer"
+                                                    >
+                                                        <Zap size={12} />
+                                                        {suggestion}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        )}
                                     </motion.div>
                                 ))}
                                 {isTyping && (
@@ -268,21 +382,33 @@ export default function Home() {
                                 <div ref={messagesEndRef} />
                             </div>
 
-                            <form onSubmit={handleSendMessage} className="p-3 bg-white border-t border-gray-100 flex gap-2">
-                                <input
-                                    type="text"
-                                    placeholder="Talebinizi yazın..."
-                                    value={chatInput}
-                                    onChange={(e) => setChatInput(e.target.value)}
-                                    className="flex-1 bg-gray-100 border-transparent focus:bg-white focus:ring-2 focus:ring-red-500 rounded-xl px-4 py-2 text-sm outline-none transition-all"
-                                />
-                                <button
-                                    type="submit"
-                                    disabled={!chatInput.trim() || isTyping}
-                                    className="bg-red-600 text-white p-2 rounded-xl hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
-                                >
-                                    <Send size={18} />
-                                </button>
+                            <form onSubmit={handleSendMessage} className="p-3 bg-white border-t border-gray-100">
+                                <div className="flex gap-2">
+                                    <input
+                                        type="text"
+                                        placeholder="Mesajınızı yazın... (Örn: 'Klima bozuldu', 'Taleplerimi göster')"
+                                        value={chatInput}
+                                        onChange={(e) => setChatInput(e.target.value)}
+                                        onKeyDown={(e) => {
+                                            if (e.key === 'Enter' && !e.shiftKey) {
+                                                e.preventDefault();
+                                                handleSendMessage(e);
+                                            }
+                                        }}
+                                        className="flex-1 bg-gray-100 border-transparent focus:bg-white focus:ring-2 focus:ring-red-500 rounded-xl px-4 py-2 text-sm outline-none transition-all"
+                                    />
+                                    <button
+                                        type="submit"
+                                        disabled={!chatInput.trim() || isTyping}
+                                        className="bg-red-600 text-white p-2 rounded-xl hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
+                                        title="Gönder (Enter)"
+                                    >
+                                        <Send size={18} />
+                                    </button>
+                                </div>
+                                <p className="text-xs text-gray-400 mt-2 px-1">
+                                    💡 İpucu: "Kaç talep var?", "Düşük stok var mı?", "Bilgisayar nerede?" gibi sorular sorabilirsiniz
+                                </p>
                             </form>
                         </motion.div>
                     )}

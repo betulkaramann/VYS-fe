@@ -1,22 +1,23 @@
 import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
+// Genişletilmiş İş Tipi Eşleştirmeleri
 const JOB_TYPE_MAPPINGS: Record<string, string[]> = {
-    'ARAÇ BAKIMI': ['araç', 'araba', 'lastik', 'motor', 'fren', 'bakım', 'sefer'],
-    'ELEKTRİK': ['elektrik', 'lamba', 'priz', 'sigorta', 'ışık', 'karanlık', 'voltaj', 'şalter'],
-    'MEKANİK': ['mekanik', 'klima', 'ısıtma', 'soğutma', 'kalorifer', 'musluk', 'su', 'boru', 'tesisat', 'asansör'],
-    'İNŞAAT': ['duvar', 'boya', 'kapı', 'pencere', 'tavan', 'zemin', 'parke', 'kırık', 'dökük'],
-    'BEYAZ EŞYA': ['buzdolabı', 'bulaşık', 'kahve', 'çay', 'makine', 'fırın'],
-    'MOBİLYA TALEBİ': ['masa', 'sandalye', 'dolap', 'koltuk', 'perde', 'raf'],
-    'BİLGİSAYAR VE YAZICI': ['bilgisayar', 'pc', 'laptop', 'yazıcı', 'toner', 'ekran', 'monitör', 'klavye', 'mouse'],
-    'SİSTEM': ['sunucu', 'server', 'domain', 'hosting'],
-    'AĞ YÖNETİMİ VE BİLGİ GÜVENLİĞİ': ['internet', 'wifi', 'bağlantı', 'network', 'ağ', 'yavaş', 'kopuyor'],
-    'YAZILIM': ['yazılım', 'program', 'uygulama', 'hata', 'açılmıyor', 'lisans'],
-    'PARK VE BAHÇE': ['bahçe', 'çim', 'ağaç', 'sulama', 'çiçek', 'peyzaj'],
-    'SES VE GÖRÜNTÜ': ['projeksiyon', 'mikrofon', 'hoparlör', 'ses', 'kamera'],
-    'TELEFON İŞLERİ': ['telefon', 'dahili', 'hat', 'ahize'],
+    'ARAÇ BAKIMI': ['araç', 'araba', 'lastik', 'motor', 'fren', 'bakım', 'sefer', 'araç bakımı', 'araba bakımı', 'araç tamiri'],
+    'ELEKTRİK': ['elektrik', 'lamba', 'priz', 'sigorta', 'ışık', 'karanlık', 'voltaj', 'şalter', 'elektrik arızası', 'elektrik tamiri', 'ampul', 'led'],
+    'MEKANİK': ['mekanik', 'klima', 'ısıtma', 'soğutma', 'kalorifer', 'musluk', 'su', 'boru', 'tesisat', 'asansör', 'klima bozuldu', 'klima tamiri', 'su kaçağı', 'kalorifer çalışmıyor'],
+    'İNŞAAT': ['duvar', 'boya', 'kapı', 'pencere', 'tavan', 'zemin', 'parke', 'kırık', 'dökük', 'boyama', 'tamir', 'onarım'],
+    'BEYAZ EŞYA': ['buzdolabı', 'bulaşık', 'kahve', 'çay', 'makine', 'fırın', 'bulaşık makinesi', 'kahve makinesi', 'çay makinesi'],
+    'MOBİLYA TALEBİ': ['masa', 'sandalye', 'dolap', 'koltuk', 'perde', 'raf', 'mobilya', 'sandalye kırık', 'masa bozuk'],
+    'BİLGİSAYAR VE YAZICI': ['bilgisayar', 'pc', 'laptop', 'yazıcı', 'toner', 'ekran', 'monitör', 'klavye', 'mouse', 'bilgisayar bozuldu', 'yazıcı çalışmıyor', 'yazıcı arızası'],
+    'SİSTEM': ['sunucu', 'server', 'domain', 'hosting', 'sunucu arızası'],
+    'AĞ YÖNETİMİ VE BİLGİ GÜVENLİĞİ': ['internet', 'wifi', 'bağlantı', 'network', 'ağ', 'yavaş', 'kopuyor', 'internet kesik', 'wifi çalışmıyor', 'ağ sorunu'],
+    'YAZILIM': ['yazılım', 'program', 'uygulama', 'hata', 'açılmıyor', 'lisans', 'yazılım hatası'],
+    'PARK VE BAHÇE': ['bahçe', 'çim', 'ağaç', 'sulama', 'çiçek', 'peyzaj', 'bahçe bakımı'],
+    'SES VE GÖRÜNTÜ': ['projeksiyon', 'mikrofon', 'hoparlör', 'ses', 'kamera', 'projeksiyon çalışmıyor'],
+    'TELEFON İŞLERİ': ['telefon', 'dahili', 'hat', 'ahize', 'telefon arızası'],
     'YÜK TAŞIMA': ['nakliye', 'taşıma', 'yük', 'koltuk taşıma'],
-    'TEMİZLİK': ['temizlik', 'kirli', 'pis', 'çöp', 'leke', 'süpür', 'hijyen', 'toz', 'temizle'],
+    'TEMİZLİK': ['temizlik', 'kirli', 'pis', 'çöp', 'leke', 'süpür', 'hijyen', 'toz', 'temizle', 'oda kirli', 'temizlik lazım'],
 };
 
 // Kurumsal Giriş Cümleleri (Random seçilecek)
@@ -40,6 +41,36 @@ const toTitleCase = (str: string) => {
     );
 };
 
+// Lokasyon çıkarımı
+const extractLocation = (text: string): string => {
+    const lowerText = text.toLocaleLowerCase('tr');
+    const locations = [
+        'ankara', 'istanbul', 'izmir', 'antalya', 'bursa',
+        'kızılay', 'çankaya', 'balgat', 'ulus', 'batıkent',
+        'yazılım dairesi', 'idari hizmetler', 'garaj', 'genel ofis',
+        'toplantı odası', 'mutfak', 'sunucu odası'
+    ];
+    
+    for (const loc of locations) {
+        if (lowerText.includes(loc)) {
+            return loc;
+        }
+    }
+    return '';
+};
+
+// Öncelik tespiti
+const detectPriority = (text: string): string => {
+    const lowerText = text.toLocaleLowerCase('tr');
+    if (lowerText.includes('acil') || lowerText.includes('hemen') || lowerText.includes('çok önemli')) {
+        return 'YÜKSEK';
+    }
+    if (lowerText.includes('önemli') || lowerText.includes('hızlı')) {
+        return 'ORTA';
+    }
+    return 'NORMAL';
+};
+
 export const usePageAutoFill = (
     setFormData: React.Dispatch<React.SetStateAction<any>>
 ) => {
@@ -52,44 +83,57 @@ export const usePageAutoFill = (
             let detectedJobType = '';
             const lowerDesc = incomingDesc.toLocaleLowerCase('tr');
 
-            // 1. İş Tipi Tahmini
+            // 1. İş Tipi Tahmini (En yüksek skorlu eşleşme)
+            let bestMatch = { type: '', score: 0 };
             for (const [jobType, keywords] of Object.entries(JOB_TYPE_MAPPINGS)) {
-                if (keywords.some((keyword) => lowerDesc.includes(keyword))) {
-                    detectedJobType = jobType;
-                    break;
+                const matchCount = keywords.filter(keyword => lowerDesc.includes(keyword)).length;
+                if (matchCount > bestMatch.score) {
+                    bestMatch = { type: jobType, score: matchCount };
                 }
             }
+            detectedJobType = bestMatch.type;
 
-            // 2. Rastgele Kurumsal Şablon Seçimi
+            // 2. Lokasyon çıkarımı
+            const detectedLocation = extractLocation(incomingDesc);
+
+            // 3. Öncelik tespiti
+            const detectedPriority = detectPriority(incomingDesc);
+
+            // 4. Rastgele Kurumsal Şablon Seçimi
             const randomIntro = FORMAL_INTRODUCTIONS[Math.floor(Math.random() * FORMAL_INTRODUCTIONS.length)];
             const randomClosing = FORMAL_CLOSINGS[Math.floor(Math.random() * FORMAL_CLOSINGS.length)];
 
             // Açıklamayı resmi formata dönüştür
             const formattedDescription = `${randomIntro}\n\nTalep Detayı: "${incomingDesc}"\n\n${randomClosing}`;
 
-            // 3. Akıllı Başlık Oluşturma (SADELEŞTİRİLDİ)
-            // Kullanıcının yazdığı "Odam kirli" gibi cümleleri başlığa kopyalamıyoruz.
-            // Sadece kategoriyi kullanarak temiz ve resmi bir başlık oluşturuyoruz.
+            // 5. Akıllı Başlık Oluşturma
             let smartTitle = '';
-
             if (detectedJobType) {
-                // Örnek Çıktı: "Temizlik Hizmet Talebi" veya "Araç Bakımı Hizmet Talebi"
                 smartTitle = `${toTitleCase(detectedJobType)} Hizmet Talebi`;
             } else {
-                // Kategori bulunamazsa
                 smartTitle = "Genel Destek Talebi";
             }
 
-            // 4. State Güncelleme
+            // 6. State Güncelleme
             setFormData((prev: any) => {
                 // Eğer açıklama zaten formatlanmışsa tekrar ekleme yapma (sonsuz döngü koruması)
-                if (prev.requestDescription.includes("Sayın İlgili") || prev.requestDescription.includes("Merhabalar,")) return prev;
+                if (prev.requestDescription && (
+                    prev.requestDescription.includes("Sayın İlgili") || 
+                    prev.requestDescription.includes("Merhabalar,") ||
+                    prev.requestDescription.includes("Talep Detayı:")
+                )) {
+                    return prev;
+                }
 
                 return {
                     ...prev,
                     requestDescription: formattedDescription,
                     requestTitle: prev.requestTitle || smartTitle,
-                    jobType: detectedJobType || prev.jobType
+                    jobType: detectedJobType || prev.jobType,
+                    location: detectedLocation || prev.location,
+                    priority: detectedPriority || prev.priority || 'NORMAL',
+                    // Ekstra alanlar varsa doldur
+                    ...(detectedLocation && { location: detectedLocation }),
                 };
             });
         }
