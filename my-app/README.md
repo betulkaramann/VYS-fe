@@ -247,3 +247,8 @@ Sorularınız için lütfen iletişime geçin / For questions, please contact us
 **Sürüm / Version:** 1.0.0  
 **Son Güncelleme / Last Updated:** 2024-10-16  
 **Geliştirici / Developer:** VYS Team
+
+İhtiyacımız olacak komutlar
+cd app\utils\db\db.json
+npx json-server --watch db.json --port 3001
+npm install env-cmd --save-dev     

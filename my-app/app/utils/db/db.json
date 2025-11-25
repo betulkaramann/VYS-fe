@@ -1,0 +1,95 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "jobNo": 1,
+      "entityCode": 3262,
+      "requester": "Cem Yılmaz",
+      "requestDetail": "Klima tamiri gerekiyor.",
+      "createDate": "2023/10/25",
+      "requestType": "Klima Tamiri",
+      "jobType": "Bakım",
+      "workOrderType": "Bakım Onarım Talebi",
+      "worker": "Ayşe Demir",
+      "status": "Onay Bekliyor"
+    },
+    {
+      "id": 2,
+      "jobNo": 2,
+      "entityCode": 3263,
+      "requester": "Şebnem Ferah",
+      "requestDetail": "Tavan lambası arızalı.",
+      "createDate": "2023/10/26",
+      "requestType": "Elektrik Tamiri",
+      "jobType": "Elektrik",
+      "workOrderType": "Elektrik İş Emri",
+      "worker": "Ahmet Kaya",
+      "status": "Talep Onaylı/İş Emri Açık"
+    },
+    {
+      "id": "b211",
+      "jobNo": 1319,
+      "entityCode": 3262,
+      "requester": "Betül Karaman",
+      "requestDetail": "odamın temizlenmesini istiyorum",
+      "createDate": "2025/11/25",
+      "requestType": "odam çok kirli",
+      "jobType": "Temizlik",
+      "workOrderType": "Genel Hizmet Talebi",
+      "worker": "Atanmadı",
+      "status": "Onay Bekliyor"
+    },
+    {
+      "id": "1a03",
+      "jobNo": 3108,
+      "entityCode": 3234,
+      "requester": "Betül Karaman",
+      "requestDetail": "Sayın İlgili,\n\n\n\nTalep Detayı: \"odam çok kirli\"\n\nKonuyla ilgili yardımlarınızı bekler, iyi çalışmalar dilerim.",
+      "createDate": "2025/11/25",
+      "requestType": "Temi̇zli̇k Hizmet Talebi",
+      "jobType": "TEMİZLİK",
+      "workOrderType": "Genel Hizmet Talebi",
+      "worker": "Atanmadı",
+      "status": "Onay Bekliyor"
+    },
+    {
+      "id": "ab0e",
+      "jobNo": 5563,
+      "entityCode": 3265,
+      "requester": "Betül Karaman",
+      "requestDetail": "Merhabalar,\n\nKonu hakkında destek talep etmekteyim.\n\nTalep Detayı: \"odama temizlik istiyorum\"\n\nDesteğiniz için teşekkürler.\nİyi çalışmalar.",
+      "createDate": "2025/11/25",
+      "requestType": "Temi̇zli̇k Hizmet Talebi",
+      "jobType": "Bakım",
+      "workOrderType": "Genel Hizmet Talebi",
+      "worker": "Atanmadı",
+      "status": "Onay Bekliyor"
+    },
+    {
+      "id": "142b",
+      "jobNo": 8444,
+      "entityCode": 3685,
+      "requester": "Betül Karaman",
+      "requestDetail": "Merhabalar,\n\nKonu hakkında destek talep etmekteyim.\n\nTalep Detayı: \"odam kirli\"\n\nKonuyla ilgili yardımlarınızı bekler, iyi çalışmalar dilerim.",
+      "createDate": "2025/11/25",
+      "requestType": "Temi̇zli̇k Hizmet Talebi",
+      "jobType": "Temizlik",
+      "workOrderType": "Genel Hizmet Talebi",
+      "worker": "Atanmadı",
+      "status": "Onay Bekliyor"
+    },
+    {
+      "id": "342a",
+      "jobNo": 8377,
+      "entityCode": 36555,
+      "requester": "Betül Karaman",
+      "requestDetail": "İlgili Birimin Dikkatine,\n\nTalebimin işleme alınmasını talep etmekteyim.\n\nTalep Detayı: \"masam kirli\"\n\nKonuyla ilgili yardımlarınızı bekler, iyi çalışmalar dilerim.",
+      "createDate": "2025/11/25",
+      "requestType": "Mobi̇lya Talebi̇ Hizmet Talebi",
+      "jobType": "Bakım",
+      "workOrderType": "Genel Hizmet Talebi",
+      "worker": "Atanmadı",
+      "status": "Onay Bekliyor"
+    }
+  ]
+}
