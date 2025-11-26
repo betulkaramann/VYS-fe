@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { ROUTES } from '../../lib/router';
 import { useState, Suspense } from 'react';
 import { usePageAutoFill } from '../../chatbot/models/usePageAutoFill';
+import toast, { Toaster } from 'react-hot-toast';
 
 function TemizlikForm() {
     const router = useRouter();
@@ -43,6 +44,9 @@ function TemizlikForm() {
         if (!formData.requestTitle) newErrors.requestTitle = 'Talep Başlığı zorunludur';
         if (!formData.requester) newErrors.requester = 'Talep Eden zorunludur';
         setErrors(newErrors);
+        if (Object.keys(newErrors).length > 0) {
+            toast.error("Lütfen zorunlu alanları doldurunuz.");
+        }
         return Object.keys(newErrors).length === 0;
     };
 
@@ -50,7 +54,7 @@ function TemizlikForm() {
         if (!validateForm()) return;
 
         setIsSubmitting(true);
-
+        const toastId = toast.loading('Kayıt oluşturuluyor...');
         // Tablonun (UserTable) beklediği format:
         // { jobNo, entityCode, requester, requestDetail, createDate, requestType, jobType, workOrderType, worker, status }
 
@@ -81,26 +85,23 @@ function TemizlikForm() {
         };
 
         try {
-
-            // process.env.NEXT_PUBLIC_API_URL -> http://localhost:3001 örnekk
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(tableCompatibleData),
             });
+
+
             if (response.ok) {
-                console.log('Kayıt başarılı, tabloya eklendi:', tableCompatibleData);
-                // İşlem başarılı, listeye yönlendir (UserTable sayfasına)
+                toast.success('Kayıt başarıyla eklendi!', { id: toastId });
+                await new Promise(resolve => setTimeout(resolve, 1500));
                 router.push(ROUTES.HOME);
             } else {
-                console.error('Kayıt başarısız oldu.');
-                alert("Bir hata oluştu.");
+                toast.error("Bir hata oluştu.", { id: toastId });
             }
         } catch (error) {
-            console.error('Sunucu hatası:', error);
-            alert("Sunucuya bağlanılamadı. JSON Server çalışıyor mu?");
+            console.error(error);
+            toast.error("Sunucu hatası.", { id: toastId });
         } finally {
             setIsSubmitting(false);
         }
@@ -129,7 +130,6 @@ function TemizlikForm() {
                     </select>
                 </div>
 
-                {/* Varlık Kodu (Tabloda: Entity Code) */}
                 <div>
                     <div className="flex items-center">
                         <label className="block text-xs font-medium text-gray-600 mr-1">Varlık Kodu (Sayısal)</label>
@@ -147,7 +147,6 @@ function TemizlikForm() {
                 </div>
 
                 <div className="grid grid-cols-2 gap-2">
-                    {/* Talep Eden (Tabloda: Requester) */}
                     <div>
                         <div className="flex items-center">
                             <label className="block text-xs font-medium text-gray-600 mr-1">Talep Eden</label>
@@ -163,7 +162,6 @@ function TemizlikForm() {
                         />
                         {errors.requester && <p className="text-red-500 text-xs mt-1">{errors.requester}</p>}
                     </div>
-                    {/* Telefon (Tabloda yok, ama formda var) */}
                     <div>
                         <label className="block text-xs font-medium text-gray-600 mb-1">Telefon</label>
                         <input
@@ -218,7 +216,6 @@ function TemizlikForm() {
                     )}
                 </div>
 
-                {/* Açıklama (Tabloda: Request Detail) */}
                 <div>
                     <label className="block text-xs font-medium text-gray-600 mr-1">Talep Açıklaması</label>
                     <textarea
@@ -250,6 +247,19 @@ function TemizlikForm() {
 export default function TemizlikPage() {
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 p-4">
+
+            <Toaster
+                position="top-right"
+                reverseOrder={false}
+                toastOptions={{
+                    duration: 4000,
+                    style: {
+                        background: '#363636',
+                        color: '#fff',
+                    },
+                }}
+            />
+
             <Suspense fallback={<div>Yükleniyor...</div>}>
                 <TemizlikForm />
             </Suspense>
